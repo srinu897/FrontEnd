@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Welcome</title>
+
+    <!-- Prevent browser caching -->
+    <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(to right, #00c6ff, #0072ff);
+            margin: 0;
+            padding: 0;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .container {
+            flex: 1;
+            max-width: 600px;
+            margin: auto;
+            padding: 40px;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            font-size: 2.5em;
+        }
+
+        p {
+            font-size: 1.2em;
+            margin-bottom: 30px;
+        }
+
+        a {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #ff4081;
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        a:hover {
+            background-color: #e73370;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #222;
+            color: #ccc;
+            font-size: 0.9em;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                margin: 20px;
+                padding: 25px;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+
+            p, a {
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome, {{ username }}!</h1>
+        <p>You are now logged in to your dashboard.</p>
+        <a href="{{ url_for('logout') }}">Logout</a>
+    </div>
+
+    <div class="footer">
+        <p>&copy; 2025 YourCompany. All rights reserved.</p>
+    </div>
+
+    <script>
+        var username = "{{ username or '' }}";
+        if (!username) {
+            window.location.href = "{{ url_for('login') }}";
+        }
+
+        if (window.performance && window.performance.navigation.type === 2) {
+            window.location.href = "{{ url_for('login') }}";
+        }
+
+        window.onunload = function () {
+            sessionStorage.clear();
+            localStorage.clear();
+        }
+    </script>
+</body>
+</html>
